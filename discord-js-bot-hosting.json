@@ -1,0 +1,52 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v1",
+        "update_url": null
+    },
+    "exported_at": "2021-03-30T01:47:36+00:00",
+    "name": "Discord Bot Hosting",
+    "author": "frozen_mitko@protonmail.com",
+    "description": "A Discord Bot Hosting Egg made by FroZen Mitko",
+    "features": null,
+    "images": [
+        "quay.io\/parkervcp\/pterodactyl-images:debian_nodejs-14",
+        "quay.io\/parkervcp\/pterodactyl-images:debian_nodejs-12",
+        "quay.io\/parkervcp\/pterodactyl-images:debian_nodejs-10"
+    ],
+    "file_denylist": [],
+    "startup": "if [ -f \/home\/container\/package.json ]; then  \/usr\/local\/bin\/npm install --production; fi; \/usr\/local\/bin\/node \/home\/container\/{{BOT_JS_FILE}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"change this part\"\r\n}",
+        "logs": "{}",
+        "stop": "^c"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# NodeJS Bot Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y curl jq file unzip make gcc g++ python python-dev libtool\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo -e \"Your hosting is setuped!\"\r\n    exit 0",
+            "container": "node:14-buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "User Uploaded Files",
+            "description": "DO NOT CHANGE!\r\n\r\n0 = false (default)\r\n1 = true",
+            "env_variable": "USER_UPLOAD",
+            "default_value": "1",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|bool"
+        },
+        {
+            "name": "Bot js file",
+            "description": "The index file from where node.js will know what to do.",
+            "env_variable": "BOT_JS_FILE",
+            "default_value": "bot.js",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string"
+        }
+    ]
+}
